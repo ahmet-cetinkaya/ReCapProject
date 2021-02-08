@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
+using Business.Concrete.Utilities;
+using Business.Concrete.Validation.FluentValidation;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using FluentValidation;
 
 namespace Business.Concrete
 {
@@ -20,7 +23,7 @@ namespace Business.Concrete
         {
             // Debug and Conditions
 
-            return _carDal.GetById(id);
+            return _carDal.Get(p => p.Id == id);
         }
 
         public List<Car> GetAll()
@@ -30,10 +33,24 @@ namespace Business.Concrete
             return _carDal.GetAll();
         }
 
-        public void Add(Car car)
+        public List<Car> GetCarsByBrandId(int id)
         {
             // Debug and Conditions
 
+            return _carDal.GetAll(p => p.BrandId == id);
+        }
+
+        public List<Car> GetCarsByColorId(int id)
+        {
+            // Debug and Conditions
+
+            return _carDal.GetAll(p => p.ColorId == id);
+        }
+
+        public void Add(Car car)
+        {
+            ValidationTool.Validate(new CarValidator(), new ValidationContext<Car>(car));
+            // Debug and Conditions
             _carDal.Add(car);
         }
 
