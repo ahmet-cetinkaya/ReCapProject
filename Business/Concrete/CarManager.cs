@@ -6,6 +6,7 @@ using Business.Concrete.Utilities;
 using Business.Concrete.Validation.FluentValidation;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using FluentValidation;
 
 namespace Business.Concrete
@@ -31,6 +32,13 @@ namespace Business.Concrete
             // Debug and Conditions
 
             return _carDal.GetAll();
+        }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            // Debug and Conditions
+
+            return _carDal.GetCarDetails();
         }
 
         public List<Car> GetCarsByBrandId(int id)
