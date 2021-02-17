@@ -4,6 +4,8 @@ using System.Text;
 using Business.Abstract;
 using Business.Concrete.Utilities;
 using Business.Concrete.Validation.FluentValidation;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -20,60 +22,64 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public Car GetById(int id)
+        public IDataResult<Car> GetById(int id)
         {
             // Debug and Conditions
 
-            return _carDal.Get(p => p.Id == id);
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
         }
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
             // Debug and Conditions
 
-            return _carDal.GetAll();
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll());
         }
 
-        public List<CarDetailDto> GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
             // Debug and Conditions
 
-            return _carDal.GetCarDetails();
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
-        public List<Car> GetCarsByBrandId(int id)
+        public IDataResult<List<Car>> GetCarsByBrandId(int id)
         {
             // Debug and Conditions
 
-            return _carDal.GetAll(p => p.BrandId == id);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == id));
         }
 
-        public List<Car> GetCarsByColorId(int id)
+        public IDataResult<List<Car>> GetCarsByColorId(int id)
         {
             // Debug and Conditions
 
-            return _carDal.GetAll(p => p.ColorId == id);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id));
         }
 
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
             ValidationTool.Validate(new CarValidator(), new ValidationContext<Car>(car));
             // Debug and Conditions
+
             _carDal.Add(car);
+            return new SuccessResult(Messages.CarAdded);
         }
 
-        public void Update(Car car)
+        public IResult Update(Car car)
         {
             // Debug and Conditions
 
             _carDal.Update(car);
+            return new SuccessResult(Messages.CarUpdated);
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             // Debug and Conditions
 
             _carDal.Delete(car);
+            return new SuccessResult(Messages.CarDeleted);
         }
     }
 }
