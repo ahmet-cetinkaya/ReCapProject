@@ -24,45 +24,30 @@ namespace Business.Concrete
 
         public IDataResult<Color> GetById(int id)
         {
-            // Debug and Conditions
-
             return new SuccessDataResult<Color>(_colorDal.Get(c => c.Id == id));
         }
 
         public IDataResult<List<Color>> GetAll()
         {
-            // Debug and Conditions
-
             return new SuccessDataResult<List<Color>>(_colorDal.GetAll());
         }
 
         public IResult Add(Color color)
         {
-            IDataResult<ValidationResult> validationResult = ValidationTool.Validate(new CarValidator(), new ValidationContext<Color>(color));
-            if (validationResult.Success == false)
-            {
-                return new ErrorDataResult<ValidationResult>(validationResult.Data);
-            }
-            // Debug and Conditions
-
             _colorDal.Add(color);
-            return new SuccessResult(Messages.CarAdded);
+            return new SuccessResult(Messages.ColorAdded);
         }
 
         public IResult Update(Color color)
         {
-            // Debug and Conditions
-
             _colorDal.Update(color);
-            return new SuccessResult(Messages.CarUpdated);
+            return new SuccessResult(Messages.ColorUpdated);
         }
 
         public IResult Delete(Color color)
         {
-            // Debug and Conditions
-
             _colorDal.Delete(color);
-            return new SuccessResult(Messages.CarDeleted);
+            return new SuccessResult(Messages.ColorDeleted);
         }
     }
 }

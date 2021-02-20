@@ -24,41 +24,30 @@ namespace Business.Concrete
 
         public IDataResult<Brand> GetById(int id)
         {
-            // Debug and Conditions
-
             return new SuccessDataResult<Brand>(_brandDal.Get(b => b.Id == id));
         }
 
         public IDataResult<List<Brand>> GetAll()
         {
-            // Debug and Conditions
-
             return new SuccessDataResult<List<Brand>>(_brandDal.GetAll());
         }
 
         public IResult Add(Brand brand)
         {
-            ValidationTool.Validate(new CarValidator(), new ValidationContext<Brand>(brand));
-            // Debug and Conditions
-
             _brandDal.Add(brand);
-            return new SuccessResult(Messages.CarAdded);
+            return new SuccessResult(Messages.BrandAdded);
         }
 
         public IResult Update(Brand brand)
         {
-            // Debug and Conditions
-
             _brandDal.Update(brand);
-            return new SuccessResult(Messages.CarUpdated);
+            return new SuccessResult(Messages.BrandUpdated);
         }
 
         public IResult Delete(Brand brand)
         {
-            // Debug and Conditions
-
             _brandDal.Delete(brand);
-            return new SuccessResult(Messages.CarDeleted);
+            return new SuccessResult(Messages.BrandDeleted);
         }
     }
 }
