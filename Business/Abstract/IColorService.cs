@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Business.Concrete.Utilities;
-using Business.Concrete.Validation.FluentValidation;
-using Business.Constants;
+﻿using System.Collections.Generic;
 using Core.Utilities.Results;
 using Entities.Concrete;
-using FluentValidation;
 
 namespace Business.Abstract
 {

@@ -1,21 +1,15 @@
-﻿using Business.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Business.Concrete.Utilities;
-using Business.Concrete.Validation.FluentValidation;
+﻿using System.Collections.Generic;
+using Business.Abstract;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using FluentValidation;
-using FluentValidation.Results;
 
 namespace Business.Concrete
 {
     public class ColorManager : IColorService
     {
-        private IColorDal _colorDal;
+        private readonly IColorDal _colorDal;
 
         public ColorManager(IColorDal colorDal)
         {

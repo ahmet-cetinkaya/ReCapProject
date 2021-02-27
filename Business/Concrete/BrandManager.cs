@@ -1,21 +1,15 @@
-﻿using Business.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Business.Concrete.Utilities;
-using Business.Concrete.Validation.FluentValidation;
+﻿using System.Collections.Generic;
+using Business.Abstract;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTOs;
-using FluentValidation;
 
 namespace Business.Concrete
 {
     public class BrandManager : IBrandService
     {
-        private IBrandDal _brandDal;
+        private readonly IBrandDal _brandDal;
 
         public BrandManager(IBrandDal brandDal)
         {

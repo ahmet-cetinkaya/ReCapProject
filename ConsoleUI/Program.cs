@@ -1,7 +1,5 @@
 ﻿using System;
 using Business.Concrete;
-using Business.Concrete.InMemory;
-using Core.Utilities.Results;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 
@@ -19,8 +17,8 @@ namespace ConsoleUI
 
         private static void rentalTest()
         {
-            RentalManager rentalManager = new RentalManager(new EfRentaldal());
-            Rental rental = new Rental
+            var rentalManager = new RentalManager(new EfRentaldal());
+            var rental = new Rental
             {
                 //Id = 3,
                 CarId = 4,
@@ -28,7 +26,7 @@ namespace ConsoleUI
                 RentDate = DateTime.Now,
                 ReturnDate = null
             };
-            IResult result = rentalManager.Add(rental);
+            var result = rentalManager.Add(rental);
             if (!result.Success) Console.WriteLine(result.Message);
             //rentalManager.Update(rental);
             //rentalManager.Delete(rental);
@@ -37,12 +35,12 @@ namespace ConsoleUI
 
         private static void customerUser()
         {
-            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
-            Customer customer = new Customer
+            var customerManager = new CustomerManager(new EfCustomerDal());
+            var customer = new Customer
             {
                 //Id = 2,
                 UserId = 2,
-                CompanyName = "AhmetCetinkaya",
+                CompanyName = "AhmetCetinkaya"
             };
             customerManager.Add(customer);
             //customerManager.Update(customer);
@@ -52,7 +50,7 @@ namespace ConsoleUI
 
         private static void userTest()
         {
-            UserManager userManager = new UserManager(new EfUserDal());
+            var userManager = new UserManager(new EfUserDal());
             //User user = new User
             //{
             //    FirstName = "Ahmet",
@@ -68,7 +66,7 @@ namespace ConsoleUI
 
         private static void carTest()
         {
-            CarManager carManager = new CarManager(new EfCarDal());
+            var carManager = new CarManager(new EfCarDal());
             //Car car = new Car
             //{
             //    Name = "iX",
