@@ -51,3 +51,12 @@ CREATE TABLE [dbo].[Users] (
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
+CREATE TABLE [dbo].[CarImages] (
+    [Id]        INT            NOT NULL IDENTITY,
+    [CarId]     INT            NOT NULL,
+    [ImagePath] NVARCHAR (MAX) NOT NULL,
+    [Date]      DATETIME       NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_CarImages_Cars] FOREIGN KEY ([CarId]) REFERENCES [dbo].[Cars] ([Id])
+);
+
