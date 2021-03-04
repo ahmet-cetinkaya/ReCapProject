@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Business.Concrete.Utilities
+namespace Core.CrossCuttingConcers.Validation.FluentValidation
 {
     public static class ValidationTool
     {

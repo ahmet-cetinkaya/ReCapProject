@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using Business.Abstract;
-using Business.Concrete.Validation.FluentValidation;
 using Business.Constants;
 using Core.Aspects.Autofac;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using ValidationRules.FluentValidation;
 
 namespace Business.Concrete
 {
