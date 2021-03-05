@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Utilities.Business;
 using Core.Utilities.FileSystems;
@@ -41,6 +42,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(result);
         }
 
+        [SecuredOperation("carimage.add,moderator,admin")]
         public IResult Add(CarImage carImage, IFormFile file)
         {
             var result = BusinessRules.Run(
@@ -53,6 +55,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImageAdded);
         }
 
+        [SecuredOperation("carimage.update,moderator,admin")]
         public IResult Update(CarImage carImage, IFormFile file)
         {
             var carImageToUpdate = _carImageDal.Get(c => c.Id == carImage.Id);
@@ -63,6 +66,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImageUpdated);
         }
 
+        [SecuredOperation("carimage.delete,moderator,admin")]
         public IResult Delete(CarImage carImage)
         {
             new FileManagerOnDisk().Delete(carImage.ImagePath);

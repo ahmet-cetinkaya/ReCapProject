@@ -31,9 +31,17 @@
         public static string ColorUpdated = "Renk güncellendi.";
         public static string ColorDeleted = "Renk silindi.";
 
-        internal static string CarImageAdded = "Araç fotoğrafı eklendi.";
-        internal static string CarImageUpdated = "Araç fotoğrafı güncellendi.";
-        internal static string CarImageDeleted = "Araç fotoğrafı silindi.";
-        internal static string CarImageCountOfCarError = "İlgili araca ait fotoğraf adedi maksimum sayıdadır.";
+        public static string CarImageAdded = "Araç fotoğrafı eklendi.";
+        public static string CarImageUpdated = "Araç fotoğrafı güncellendi.";
+        public static string CarImageDeleted = "Araç fotoğrafı silindi.";
+        public static string CarImageCountOfCarError = "İlgili araca ait fotoğraf adedi maksimum sayıdadır.";
+
+        public static string AuthorizationDenied = "Yetkiniz bulunmamaktadır.";
+        public static string UserRegistered = "Kullanıcı kaydı gerçekleştirildi.";
+        public static string UserNotFound = "Kullanıcı bulunamadı.";
+        public static string SuccessfulLogin = "Giriş başarılı.";
+        public static string PasswordError = "Hatalı parola.";
+        public static string UserAlreadyExists = "Kullanıcı zaten bulunmaktadır.";
+        public static string AccessTokenCreated = "Yetkilendime anahtarı oluşturuldu.";
     }
 }
