@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Core.CrossCuttingConcers.Validation.FluentValidation
+namespace Core.CrossCuttingConcerns.Validation.FluentValidation
 {
     public static class ValidationTool
     {
