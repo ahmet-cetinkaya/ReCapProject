@@ -1,4 +1,5 @@
-﻿using Business.Abstract;
+﻿using System;
+using Business.Abstract;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,20 @@ namespace WebAPI.Controllers
         {
             var result = _carImageService.GetById(id);
             if (result.Success) return Ok(result);
+
+            return BadRequest(result);
+        }
+
+        [HttpGet("getfilebyid")]
+        public IActionResult GetFileById(int id)
+        {
+            var result = _carImageService.GetById(id);
+            
+            if (result.Success)
+            {
+                Byte[] b = System.IO.File.ReadAllBytes(result.Data.ImagePath);
+                return File(b, "image/jpeg");
+            }
 
             return BadRequest(result);
         }

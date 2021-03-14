@@ -5,8 +5,8 @@
         public static string MaintenanceTime = "Sistem bakımda.";
 
         public static string CarNameInvalid = "Araç ismi geçersiz.";
-        public static string CarsListed = "Araçlar listelendi";
-        public static string CarAdded = "Araçlar eklendi.";
+        public static string CarsListed = "Araç listelendi";
+        public static string CarAdded = "Araç eklendi.";
         public static string CarUpdated = "Araç güncellendi.";
         public static string CarDeleted = "Araç silindi.";
 

@@ -26,7 +26,10 @@ namespace Business.Concrete
 
         public IDataResult<CarImage> GetById(int id)
         {
-            return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.Id == id));
+            var result = _carImageDal.Get(c => c.Id == id);
+            IfCarImageOfCarNotExistsAddDefault(ref result);
+
+            return new SuccessDataResult<CarImage>(result);
         }
 
         public IDataResult<List<CarImage>> GetAll()
@@ -38,7 +41,7 @@ namespace Business.Concrete
         public IDataResult<List<CarImage>> GetImagesByCarId(int carId)
         {
             var result = _carImageDal.GetAll(c => c.CarId == carId);
-            IfCarImageOfCarNotExistsAddDefault(result, carId);
+            IfCarImageOfCarNotExistsAddDefault(ref result);
 
             return new SuccessDataResult<List<CarImage>>(result);
         }
@@ -78,19 +81,25 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarImageDeleted);
         }
 
-        private void IfCarImageOfCarNotExistsAddDefault(List<CarImage> result, int carId)
+        private void IfCarImageOfCarNotExistsAddDefault(ref List<CarImage> result)
         {
-            if (!result.Any())
+            if (!result.Any()) result.Add(CreateDefaultCarImage());
+        }
+
+        private void IfCarImageOfCarNotExistsAddDefault(ref CarImage result)
+        {
+            if (result == null) result = CreateDefaultCarImage();
+        }
+
+        private CarImage CreateDefaultCarImage()
+        {
+            var defaultCarImage = new CarImage
             {
-                var defaultCarImage = new CarImage
-                {
-                    CarId = carId,
-                    ImagePath =
-                        $@"{Environment.CurrentDirectory}\Public\Images\CarImage\default-img.png",
-                    Date = DateTime.Now
-                };
-                result.Add(defaultCarImage);
-            }
+                ImagePath =
+                    $@"{Environment.CurrentDirectory}\Public\Images\CarImage\default-img.png",
+                Date = DateTime.Now
+            };
+            return defaultCarImage;
         }
 
         private string CreateNewPath(IFormFile file)
