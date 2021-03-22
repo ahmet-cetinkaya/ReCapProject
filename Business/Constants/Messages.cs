@@ -22,6 +22,7 @@
         public static string RentalUpdated = "Kiralama işlemi güncellendi.";
         public static string RentalDeleted = "Kiralama işlemi silindi.";
         public static string RentalUndeliveredCar = "Araç henüz teslim edilmedi.";
+        public static string RentalNotAvailable = "Kiralama işlemi seçilen tarihler arasında uygun değil.";
 
         public static string BrandAdded = "Marka eklendi.";
         public static string BrandUpdated = "Marka güncellendi.";
@@ -43,5 +44,8 @@
         public static string PasswordError = "Hatalı parola.";
         public static string UserAlreadyExists = "Kullanıcı zaten bulunmaktadır.";
         public static string AccessTokenCreated = "Yetkilendime anahtarı oluşturuldu.";
+
+        public static string PaymentFailed = "Payment failed.";
+        public static string PaymentSuccessful = "Payment Successful.";
     }
 }

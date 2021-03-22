@@ -33,6 +33,15 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpPost("isrentable")]
+        public IActionResult IsRentable(Rental rental)
+        {
+            var result = _rentalService.IsRentable(rental);
+            if (result.Success) return Ok(result);
+
+            return BadRequest(result);
+        }
+
         [HttpPost("add")]
         public IActionResult Add(Rental rental)
         {

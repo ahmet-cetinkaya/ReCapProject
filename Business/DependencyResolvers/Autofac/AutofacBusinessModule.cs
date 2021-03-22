@@ -29,7 +29,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfCustomerDal>().As<ICustomerDal>().SingleInstance();
 
             builder.RegisterType<RentalManager>().As<IRentalService>().SingleInstance();
-            builder.RegisterType<EfRentaldal>().As<IRentalDal>().SingleInstance();
+            builder.RegisterType<EfRentalDal>().As<IRentalDal>().SingleInstance();
 
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
@@ -42,6 +42,8 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
+
+            builder.RegisterType<PaymentManager>().As<IPaymentService>();
 
             var assembly = Assembly.GetExecutingAssembly();
             builder.RegisterAssemblyTypes(assembly)

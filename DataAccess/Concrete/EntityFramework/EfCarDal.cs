@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -9,7 +11,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal : EfEntityRepositoryBase<Car, ReCapProjectContext>, ICarDal
     {
-        public List<CarDetailDto> GetCarDetails()
+        public List<CarDetailDto> GetCarDetails(Expression<Func<CarDetailDto, bool>> filter = null)
         {
             using (var context = new ReCapProjectContext())
             {
@@ -27,7 +29,7 @@ namespace DataAccess.Concrete.EntityFramework
                         DailyPrice = p.DailyPrice,
                         ModelYear = p.ModelYear
                     };
-                return result.ToList();
+                return filter == null ? result.ToList() : result.Where(filter).ToList();
             }
         }
     }

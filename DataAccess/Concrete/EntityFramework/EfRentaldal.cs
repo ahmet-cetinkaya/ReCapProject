@@ -4,7 +4,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfRentaldal : EfEntityRepositoryBase<Rental, ReCapProjectContext>, IRentalDal
+    public class EfRentalDal : EfEntityRepositoryBase<Rental, ReCapProjectContext>, IRentalDal
     {
     }
 }

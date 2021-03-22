@@ -76,5 +76,24 @@ namespace Business.Concrete
             _carDal.Delete(car);
             return new SuccessResult(Messages.CarDeleted);
         }
+
+        [CacheAspect]
+        public IDataResult<List<CarDetailDto>> GetCarDetailsByBrandName(string name)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c => c.BrandName == name));
+        }
+
+        [CacheAspect]
+        public IDataResult<List<CarDetailDto>> GetCarDetailsByColorName(string name)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c => c.ColorName == name));
+        }
+
+        [CacheAspect]
+        public IDataResult<List<CarDetailDto>> GetCarDetailsByBrandNameAndColorName(string brandName, string colorName)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c =>
+                c.BrandName == brandName && c.ColorName == colorName));
+        }
     }
 }

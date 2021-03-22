@@ -35,11 +35,12 @@ CREATE TABLE [dbo].[Rentals] (
     [Id]         INT      IDENTITY (1, 1) NOT NULL,
     [CarId]      INT      NOT NULL,
     [CustomerId] INT      NOT NULL,
-    [RentDate]   DATETIME NULL,
-    [ReturnDate] DATETIME NULL,
+    [RentStartDate]   DATETIME NOT NULL,
+    [RentEndDate] DATETIME NOT NULL,
+    [ReturnDate] DATETIME NULL, 
     PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_Rentals_Customers] FOREIGN KEY ([CustomerId]) REFERENCES [dbo].[Customers] ([Id]),
-    CONSTRAINT [FK_Rentals_Cars] FOREIGN KEY ([CarId]) REFERENCES [dbo].[Cars] ([Id])
+    CONSTRAINT [FK_Rentals_Cars] FOREIGN KEY ([CarId]) REFERENCES [dbo].[Cars] ([Id]),
+    CONSTRAINT [FK_Rentals_Customers] FOREIGN KEY ([CustomerId]) REFERENCES [dbo].[Customers] ([Id])
 );
 
 CREATE TABLE [dbo].[Users] (

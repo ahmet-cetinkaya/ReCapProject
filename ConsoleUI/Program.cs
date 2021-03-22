@@ -15,23 +15,23 @@ namespace ConsoleUI
             //rentalTest();
         }
 
-        private static void rentalTest()
-        {
-            var rentalManager = new RentalManager(new EfRentaldal());
-            var rental = new Rental
-            {
-                //Id = 3,
-                CarId = 4,
-                CustomerId = 3,
-                RentDate = DateTime.Now,
-                ReturnDate = null
-            };
-            var result = rentalManager.Add(rental);
-            if (!result.Success) Console.WriteLine(result.Message);
-            //rentalManager.Update(rental);
-            //rentalManager.Delete(rental);
-            rentalManager.GetAll().Data.ForEach(r => Console.WriteLine(r.CarId + " " + r.RentDate));
-        }
+        //private static void rentalTest()
+        //{
+        //    var rentalManager = new RentalManager(new EfRentaldal());
+        //    var rental = new Rental
+        //    {
+        //        //Id = 3,
+        //        CarId = 4,
+        //        CustomerId = 3,
+        //        RentDate = DateTime.Now,
+        //        ReturnDate = null
+        //    };
+        //    var result = rentalManager.Add(rental);
+        //    if (!result.Success) Console.WriteLine(result.Message);
+        //    //rentalManager.Update(rental);
+        //    //rentalManager.Delete(rental);
+        //    rentalManager.GetAll().Data.ForEach(r => Console.WriteLine(r.CarId + " " + r.RentDate));
+        //}
 
         private static void customerUser()
         {

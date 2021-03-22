@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Business.Abstract;
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -27,17 +31,19 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
         }
 
-        [SecuredOperation("rental.add,moderator,admin")]
-        public IResult Add(Rental customer)
+        [SecuredOperation("user,rental.add,moderator,admin")]
+        [ValidationAspect(typeof(RentalValidator))]
+        public IResult Add(Rental rental)
         {
-            var result = CheckReturnDate(customer.CarId);
-            if (!result.Success) return new ErrorResult(result.Message);
+            var result = BusinessRules.Run(IsRentable(rental));
+            if (result != null) return result;
 
-            _rentalDal.Add(customer);
+            _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
         }
 
         [SecuredOperation("rental.update,moderator,admin")]
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Update(Rental customer)
         {
             _rentalDal.Update(customer);
@@ -51,11 +57,29 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalDeleted);
         }
 
-        public IDataResult<Rental> CheckReturnDate(int carId)
+        public IDataResult<List<Rental>> GetAllByCarId(int carId)
+        {
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(r => r.CarId == carId));
+        }
+
+        public IResult CheckReturnDate(int carId)
         {
             var result = _rentalDal.GetAll(x => x.CarId == carId && x.ReturnDate == null);
-            if (result.Count > 0) return new ErrorDataResult<Rental>(Messages.RentalUndeliveredCar);
-            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.CarId == carId));
+            if (result.Count > 0) return new ErrorResult(Messages.RentalUndeliveredCar);
+            return new SuccessResult();
+        }
+
+        [ValidationAspect(typeof(RentalValidator))]
+        public IResult IsRentable(Rental rental)
+        {
+            var result = _rentalDal.GetAll(r => r.CarId == rental.CarId);
+
+            if (result.Any(r =>
+                r.RentEndDate >= rental.RentStartDate &&
+                r.RentStartDate <= rental.RentEndDate
+            )) return new ErrorResult(Messages.RentalNotAvailable);
+
+            return new SuccessResult();
         }
     }
 }
