@@ -1,5 +1,4 @@
-﻿using System;
-using Business.Abstract;
+﻿using Business.Abstract;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,10 +29,10 @@ namespace WebAPI.Controllers
         public IActionResult GetFileById(int id)
         {
             var result = _carImageService.GetById(id);
-            
+
             if (result.Success)
             {
-                Byte[] b = System.IO.File.ReadAllBytes(result.Data.ImagePath);
+                var b = System.IO.File.ReadAllBytes(result.Data.ImagePath);
                 return File(b, "image/jpeg");
             }
 
@@ -77,9 +76,8 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete([FromForm(Name = "Id")] int id)
+        public IActionResult Delete(CarImage carImage)
         {
-            var carImage = _carImageService.GetById(id).Data;
             var result = _carImageService.Delete(carImage);
             if (result.Success) return Ok(result);
 
