@@ -45,6 +45,13 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<PaymentManager>().As<IPaymentService>();
 
+            builder.RegisterType<OperationClaimManager>().As<IOperationClaimService>();
+            builder.RegisterType<EfOperationClaimDal>().As<IOperationClaimDal>();
+
+            builder.RegisterType<UserOperationClaimManager>().As<IUserOperationClaimService>();
+            builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationClaimDal>();
+
+
             var assembly = Assembly.GetExecutingAssembly();
             builder.RegisterAssemblyTypes(assembly)
                 .AsImplementedInterfaces()

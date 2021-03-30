@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
+using Entities.DTOs;
 
 namespace Business.Abstract
 {
@@ -19,5 +20,7 @@ namespace Business.Abstract
         IDataResult<List<OperationClaim>> GetClaims(User user);
 
         IDataResult<User> GetByMail(string email);
+
+        IDataResult<UserDetailDto> GetUserDetailByMail(string userMail);
     }
 }

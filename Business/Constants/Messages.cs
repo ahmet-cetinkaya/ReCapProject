@@ -47,5 +47,13 @@
 
         public static string PaymentFailed = "Payment failed.";
         public static string PaymentSuccessful = "Payment Successful.";
+
+        public static string UserOperationClaimAdded = "User operation claim has added.";
+        public static string UserOperationClaimUpdated = "User operation claim has updated.";
+        public static string UserOperationClaimDeleted = "User operation claim has deleted.";
+
+        public static string OperationClaimAdded = "Operation claim has added.";
+        public static string OperationClaimUpdated = "Operation claim has added.";
+        public static string OperationClaimDeleted = "Operation claim has added.";
     }
 }

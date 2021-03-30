@@ -1,4 +1,7 @@
-﻿using Business.Abstract;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
@@ -11,19 +14,22 @@ namespace Business.Concrete
     public class AuthManager : IAuthService
     {
         private readonly ITokenHelper _tokenHelper;
+        private readonly IUserOperationClaimService _userOperationClaimService;
         private readonly IUserService _userService;
 
-        public AuthManager(IUserService userService, ITokenHelper tokenHelper)
+        public AuthManager(IUserService userService, ITokenHelper tokenHelper,
+            IUserOperationClaimService userOperationClaimService)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
+            _userOperationClaimService = userOperationClaimService;
         }
 
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
-            var user = new User
+            var newUser = new User
             {
                 Email = userForRegisterDto.Email,
                 FirstName = userForRegisterDto.FirstName,
@@ -32,7 +38,9 @@ namespace Business.Concrete
                 PasswordSalt = passwordSalt,
                 Status = true
             };
-            _userService.Add(user);
+            _userService.Add(newUser);
+            var user = _userService.GetByMail(newUser.Email).Data;
+            _userOperationClaimService.AddUserClaim(user);
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
@@ -64,6 +72,22 @@ namespace Business.Concrete
             if (!claimsResult.Success) return new ErrorDataResult<AccessToken>(claimsResult.Message);
             var accessToken = _tokenHelper.CreateToken(user, claimsResult.Data);
             return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
+        }
+
+        [SecuredOperation("user")]
+        public IResult IsAuthenticated(string userMail, List<string> requiredRoles)
+        {
+            if (requiredRoles != null && requiredRoles.Count > 0)
+            {
+                var user = _userService.GetByMail(userMail).Data;
+                var userClaims = _userService.GetClaims(user).Data;
+                var isHaveRequiredRoles =
+                    requiredRoles.All(role => userClaims.Select(userClaim => userClaim.Name).Contains(role));
+
+                if (!isHaveRequiredRoles) return new ErrorResult(Messages.AuthorizationDenied);
+            }
+
+            return new SuccessResult();
         }
     }
 }

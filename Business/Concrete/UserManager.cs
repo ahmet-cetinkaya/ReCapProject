@@ -5,6 +5,7 @@ using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -17,11 +18,13 @@ namespace Business.Concrete
             _userDal = userDal;
         }
 
+        [SecuredOperation("user.get,moderator,admin")]
         public IDataResult<User> GetById(int id)
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.Id == id));
         }
 
+        [SecuredOperation("user.get,moderator,admin")]
         public IDataResult<List<User>> GetAll()
         {
             return new SuccessDataResult<List<User>>(_userDal.GetAll());
@@ -55,6 +58,11 @@ namespace Business.Concrete
         public IDataResult<User> GetByMail(string email)
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.Email == email));
+        }
+
+        public IDataResult<UserDetailDto> GetUserDetailByMail(string userMail)
+        {
+            return new SuccessDataResult<UserDetailDto>(_userDal.GetUserDetail(userMail));
         }
     }
 }
