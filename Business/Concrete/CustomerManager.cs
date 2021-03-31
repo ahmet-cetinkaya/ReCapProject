@@ -27,7 +27,6 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll());
         }
 
-        [SecuredOperation("customer.add,moderator,admin")]
         public IResult Add(Customer customer)
         {
             _customerDal.Add(customer);

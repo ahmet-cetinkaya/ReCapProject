@@ -14,11 +14,15 @@ namespace Business.Concrete
 {
     public class RentalManager : IRentalService
     {
+        private readonly ICarService _carService;
+        private readonly IFindeksService _findeksService;
         private readonly IRentalDal _rentalDal;
 
-        public RentalManager(IRentalDal rentalDal)
+        public RentalManager(IRentalDal rentalDal, ICarService carService, IFindeksService findeksService)
         {
             _rentalDal = rentalDal;
+            _carService = carService;
+            _findeksService = findeksService;
         }
 
         public IDataResult<Rental> GetById(int id)
@@ -35,7 +39,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            var result = BusinessRules.Run(IsRentable(rental));
+            var result = BusinessRules.Run(IsRentable(rental), CheckFindeksScoreSufficiency(rental));
             if (result != null) return result;
 
             _rentalDal.Add(rental);
@@ -78,6 +82,17 @@ namespace Business.Concrete
                 r.RentEndDate >= rental.RentStartDate &&
                 r.RentStartDate <= rental.RentEndDate
             )) return new ErrorResult(Messages.RentalNotAvailable);
+
+            return new SuccessResult();
+        }
+
+        public IResult CheckFindeksScoreSufficiency(Rental rental)
+        {
+            var car = _carService.GetById(rental.CarId).Data;
+            var findeks = _findeksService.GetByCustomerId(rental.CustomerId).Data;
+
+            if (findeks == null) return new ErrorResult(Messages.FindeksNotFound);
+            if (findeks.Score < car.MinFindeksScore) return new ErrorResult(Messages.FindeksNotEnoughForCar);
 
             return new SuccessResult();
         }

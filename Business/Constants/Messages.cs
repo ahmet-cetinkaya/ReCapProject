@@ -55,5 +55,8 @@
         public static string OperationClaimAdded = "Operation claim has added.";
         public static string OperationClaimUpdated = "Operation claim has added.";
         public static string OperationClaimDeleted = "Operation claim has added.";
+
+        internal static string FindeksNotEnoughForCar = "Findeks point is not enough for the car.";
+        internal static string FindeksNotFound = "You have to add your findeks score.";
     }
 }

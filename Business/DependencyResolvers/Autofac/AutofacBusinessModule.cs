@@ -43,13 +43,16 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
-            builder.RegisterType<PaymentManager>().As<IPaymentService>();
+            builder.RegisterType<FakePaymentManager>().As<IPaymentService>();
 
             builder.RegisterType<OperationClaimManager>().As<IOperationClaimService>();
             builder.RegisterType<EfOperationClaimDal>().As<IOperationClaimDal>();
 
             builder.RegisterType<UserOperationClaimManager>().As<IUserOperationClaimService>();
             builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationClaimDal>();
+
+            builder.RegisterType<FakeFindeksManager>().As<IFindeksService>();
+            builder.RegisterType<EfFindeksDal>().As<IFindeksDal>();
 
 
             var assembly = Assembly.GetExecutingAssembly();

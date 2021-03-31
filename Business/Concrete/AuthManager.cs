@@ -7,22 +7,25 @@ using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JWT;
+using Entities.Concrete;
 using Entities.DTOs;
 
 namespace Business.Concrete
 {
     public class AuthManager : IAuthService
     {
+        private readonly ICustomerService _customerService;
         private readonly ITokenHelper _tokenHelper;
         private readonly IUserOperationClaimService _userOperationClaimService;
         private readonly IUserService _userService;
 
         public AuthManager(IUserService userService, ITokenHelper tokenHelper,
-            IUserOperationClaimService userOperationClaimService)
+            IUserOperationClaimService userOperationClaimService, ICustomerService customerService)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
             _userOperationClaimService = userOperationClaimService;
+            _customerService = customerService;
         }
 
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
@@ -41,6 +44,8 @@ namespace Business.Concrete
             _userService.Add(newUser);
             var user = _userService.GetByMail(newUser.Email).Data;
             _userOperationClaimService.AddUserClaim(user);
+            var newCustomer = new Customer {UserId = user.Id, CompanyName = $"{user.FirstName} {user.LastName}"};
+            _customerService.Add(newCustomer);
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 

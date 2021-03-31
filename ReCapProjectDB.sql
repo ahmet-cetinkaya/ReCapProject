@@ -12,6 +12,7 @@ CREATE TABLE [dbo].[Cars] (
     [DailyPrice]  DECIMAL (18)  NOT NULL,
     [ModelYear]   SMALLINT      NOT NULL,
     [Description] NVARCHAR (50) NULL,
+    [MinFindeksScore] SMALLINT      DEFAULT ((0)) NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Cars_Brands] FOREIGN KEY ([BrandId]) REFERENCES [dbo].[Brands] ([Id]),
     CONSTRAINT [FK_Cars_Colors] FOREIGN KEY ([ColorId]) REFERENCES [dbo].[Colors] ([Id])
@@ -76,4 +77,13 @@ CREATE TABLE [dbo].[UserOperationClaims] (
     PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_UserOperationClaims_Users] FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users] ([Id]),
     CONSTRAINT [FK_UserOperationClaims_OperationClaims] FOREIGN KEY ([OperationClaimId]) REFERENCES [dbo].[OperationClaims] ([Id])
+);
+
+CREATE TABLE [dbo].[Findeks] (
+    [Id]               INT        IDENTITY (1, 1) NOT NULL,
+    [CustomerId]       INT        NOT NULL,
+    [NationalIdentity] NCHAR (50) NOT NULL,
+    [Score]            SMALLINT   DEFAULT ((0)) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Findeks_Customers] FOREIGN KEY ([CustomerId]) REFERENCES [dbo].[Customers] ([Id])
 );

@@ -14,10 +14,10 @@ namespace WebAPI.Controllers
             _paymentService = paymentService;
         }
 
-        [HttpGet("test")]
-        public IActionResult Test() // Test
+        [HttpGet("payment")]
+        public IActionResult Payment() // Test
         {
-            var result = _paymentService.test();
+            var result = _paymentService.Payment();
             if (result.Success) return Ok(result);
 
             return BadRequest(result);

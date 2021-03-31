@@ -5,9 +5,9 @@ using Core.Utilities.Results;
 
 namespace Business.Concrete
 {
-    public class PaymentManager : IPaymentService
+    public class FakePaymentManager : IPaymentService
     {
-        public IResult test() // Test
+        public IResult Payment()
         {
             var rd = new Random().Next(2);
             if (rd == 0) return new ErrorResult(Messages.PaymentFailed);

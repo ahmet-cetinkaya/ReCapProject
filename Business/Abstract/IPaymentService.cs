@@ -4,6 +4,6 @@ namespace Business.Abstract
 {
     public interface IPaymentService
     {
-        IResult test(); // Test
+        IResult Payment();
     }
 }
