@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -17,16 +18,19 @@ namespace Business.Concrete
             _findeksDal = findeksDal;
         }
 
+        [SecuredOperation("findeks.getbyid,moderator,admin")]
         public IDataResult<Findeks> GetById(int id)
         {
             return new SuccessDataResult<Findeks>(_findeksDal.Get(f => f.Id == id));
         }
 
+        [SecuredOperation("user")]
         public IDataResult<Findeks> GetByCustomerId(int customerId)
         {
             return new SuccessDataResult<Findeks>(_findeksDal.Get(f => f.CustomerId == customerId));
         }
 
+        [SecuredOperation("findeks.getall,moderator,admin")]
         public IDataResult<List<Findeks>> GetAll()
         {
             return new SuccessDataResult<List<Findeks>>(_findeksDal.GetAll());
@@ -39,15 +43,18 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BrandAdded);
         }
 
+        [SecuredOperation("findeks.update,moderator,admin")]
         public IResult Update(Findeks findeks)
         {
-            _findeksDal.Add(findeks);
+            var newFindeks = CalculateFindeksScore(findeks).Data;
+            _findeksDal.Update(newFindeks);
             return new SuccessResult(Messages.BrandAdded);
         }
 
+        [SecuredOperation("findeks.delete,moderator,admin")]
         public IResult Delete(Findeks findeks)
         {
-            _findeksDal.Add(findeks);
+            _findeksDal.Delete(findeks);
             return new SuccessResult(Messages.BrandAdded);
         }
 

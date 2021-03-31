@@ -4,18 +4,27 @@ using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
+using Core.Utilities.Security.Hashing;
 using DataAccess.Abstract;
+using Entities.Concrete;
 using Entities.DTOs;
 
 namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
+        private readonly ICustomerDal _customerDal;
+        private readonly IFindeksDal _findeksDal;
+        private readonly IFindeksService _findeksService;
         private readonly IUserDal _userDal;
 
-        public UserManager(IUserDal userDal)
+        public UserManager(IUserDal userDal, ICustomerDal customerDal, IFindeksDal findeksDal,
+            IFindeksService findeksService)
         {
             _userDal = userDal;
+            _customerDal = customerDal;
+            _findeksDal = findeksDal;
+            _findeksService = findeksService;
         }
 
         [SecuredOperation("user.get,moderator,admin")]
@@ -41,6 +50,52 @@ namespace Business.Concrete
         {
             _userDal.Update(user);
             return new SuccessResult(Messages.UserUpdated);
+        }
+
+        public IResult UpdateUserDetails(UserDetailForUpdateDto userDetailForUpdate)
+        {
+            var user = GetById(userDetailForUpdate.Id).Data;
+
+            if (!HashingHelper.VerifyPasswordHash(userDetailForUpdate.CurrentPassword, user.PasswordHash,
+                user.PasswordSalt)) return new ErrorResult(Messages.PasswordError);
+
+            user.FirstName = userDetailForUpdate.FirstName;
+            user.LastName = userDetailForUpdate.LastName;
+            if (!string.IsNullOrEmpty(userDetailForUpdate.NewPassword))
+            {
+                byte[] passwordHash, passwordSalt;
+                HashingHelper.CreatePasswordHash(userDetailForUpdate.NewPassword, out passwordHash, out passwordSalt);
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
+            }
+
+            _userDal.Update(user);
+
+            var customer = _customerDal.Get(c => c.Id == userDetailForUpdate.CustomerId);
+            customer.CompanyName = userDetailForUpdate.CompanyName;
+            _customerDal.Update(customer);
+
+            if (!string.IsNullOrEmpty(userDetailForUpdate.NationalIdentity))
+            {
+                var findeks = _findeksService.GetByCustomerId(userDetailForUpdate.CustomerId).Data;
+                if (findeks == null)
+                {
+                    var newFindeks = new Findeks
+                    {
+                        CustomerId = userDetailForUpdate.CustomerId,
+                        NationalIdentity = userDetailForUpdate.NationalIdentity
+                    };
+                    _findeksDal.Add(newFindeks);
+                }
+                else
+                {
+                    findeks.NationalIdentity = userDetailForUpdate.NationalIdentity;
+                    var newFindeks = _findeksService.CalculateFindeksScore(findeks).Data;
+                    _findeksDal.Update(newFindeks);
+                }
+            }
+
+            return new SuccessResult(Messages.UserDetailsUpdated);
         }
 
         [SecuredOperation("user.delete,moderator,admin")]
