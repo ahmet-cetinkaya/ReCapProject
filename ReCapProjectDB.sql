@@ -27,7 +27,7 @@ CREATE TABLE [dbo].[Colors] (
 CREATE TABLE [dbo].[Customers] (
     [Id]          INT        IDENTITY (1, 1) NOT NULL,
     [UserId]      INT        NOT NULL,
-    [CompanyName] NCHAR (50) NULL,
+    [CompanyName] NVARCHAR(50) NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Customers_Users] FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users] ([Id])
 );
@@ -82,8 +82,22 @@ CREATE TABLE [dbo].[UserOperationClaims] (
 CREATE TABLE [dbo].[Findeks] (
     [Id]               INT        IDENTITY (1, 1) NOT NULL,
     [CustomerId]       INT        NOT NULL,
-    [NationalIdentity] NCHAR (50) NOT NULL,
+    [NationalIdentity] NVARCHAR(50) NOT NULL,
     [Score]            SMALLINT   DEFAULT ((0)) NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Findeks_Customers] FOREIGN KEY ([CustomerId]) REFERENCES [dbo].[Customers] ([Id])
 );
+
+CREATE TABLE [dbo].[CreditCards] (
+    [Id]          INT            IDENTITY (1, 1) NOT NULL,
+    [CustomerId]  INT            NOT NULL,
+    [NameSurname] NVARCHAR (100) NOT NULL,
+    [CardNumber]  NVARCHAR (25)  NOT NULL,
+    [ExpMonth]    TINYINT        NOT NULL,
+    [ExpYear]     TINYINT        NOT NULL,
+    [Cvc]         NVARCHAR (3)   NOT NULL,
+    [CardType]    NVARCHAR(20)     NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_CreditCards_Customers] FOREIGN KEY ([CustomerId]) REFERENCES [dbo].[Customers] ([Id])
+);
+

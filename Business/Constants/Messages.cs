@@ -56,9 +56,12 @@
         public static string OperationClaimUpdated = "Operation claim has added.";
         public static string OperationClaimDeleted = "Operation claim has added.";
 
-        internal static string FindeksNotEnoughForCar = "Findeks point is not enough for the car.";
-        internal static string FindeksNotFound = "You have to add your findeks score.";
+        public static string FindeksNotEnoughForCar = "Findeks point is not enough for the car.";
+        public static string FindeksNotFound = "You have to add your findeks score.";
 
         public static string UserDetailsUpdated = "User details have been updated.";
+
+        public static readonly string creditCardAdded = "Credit card has added.";
+        public static readonly string creditCardDeleted = "Credit card has deleted.";
     }
 }
