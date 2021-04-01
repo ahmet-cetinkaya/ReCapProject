@@ -20,19 +20,26 @@ namespace Business.Concrete
 
         public RentalManager(IRentalDal rentalDal, ICarService carService, IFindeksService findeksService)
         {
-            _rentalDal = rentalDal;
             _carService = carService;
             _findeksService = findeksService;
+            _rentalDal = rentalDal;
         }
 
+        [SecuredOperation("user,rental.get,moderator,admin")]
         public IDataResult<Rental> GetById(int id)
         {
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == id));
         }
 
+        [SecuredOperation("user,rental.get,moderator,admin")]
         public IDataResult<List<Rental>> GetAll()
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
+        }
+
+        public IDataResult<List<Rental>> GetAllByCarId(int carId)
+        {
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(r => r.CarId == carId));
         }
 
         [SecuredOperation("user,rental.add,moderator,admin")]
@@ -43,6 +50,7 @@ namespace Business.Concrete
             if (result != null) return result;
 
             _rentalDal.Add(rental);
+
             return new SuccessResult(Messages.RentalAdded);
         }
 
@@ -51,6 +59,7 @@ namespace Business.Concrete
         public IResult Update(Rental customer)
         {
             _rentalDal.Update(customer);
+
             return new SuccessResult(Messages.RentalUpdated);
         }
 
@@ -58,18 +67,15 @@ namespace Business.Concrete
         public IResult Delete(Rental customer)
         {
             _rentalDal.Delete(customer);
+
             return new SuccessResult(Messages.RentalDeleted);
         }
 
-        public IDataResult<List<Rental>> GetAllByCarId(int carId)
-        {
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(r => r.CarId == carId));
-        }
-
-        public IResult CheckReturnDate(int carId)
+        public IResult CheckReturnDateByCarId(int carId)
         {
             var result = _rentalDal.GetAll(x => x.CarId == carId && x.ReturnDate == null);
             if (result.Count > 0) return new ErrorResult(Messages.RentalUndeliveredCar);
+
             return new SuccessResult();
         }
 

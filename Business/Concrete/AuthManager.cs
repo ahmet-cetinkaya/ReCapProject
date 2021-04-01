@@ -46,6 +46,7 @@ namespace Business.Concrete
             _userOperationClaimService.AddUserClaim(user);
             var newCustomer = new Customer {UserId = user.Id, CompanyName = $"{user.FirstName} {user.LastName}"};
             _customerService.Add(newCustomer);
+
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
@@ -68,6 +69,7 @@ namespace Business.Concrete
             var userResult = _userService.GetByMail(email);
             if (!userResult.Success) return new ErrorResult(userResult.Message);
             if (userResult.Data != null) return new ErrorResult(Messages.UserAlreadyExists);
+
             return new SuccessResult();
         }
 
@@ -76,20 +78,20 @@ namespace Business.Concrete
             var claimsResult = _userService.GetClaims(user);
             if (!claimsResult.Success) return new ErrorDataResult<AccessToken>(claimsResult.Message);
             var accessToken = _tokenHelper.CreateToken(user, claimsResult.Data);
+
             return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
         }
 
         [SecuredOperation("user")]
         public IResult IsAuthenticated(string userMail, List<string> requiredRoles)
         {
-            if (requiredRoles != null && requiredRoles.Count > 0)
+            if (requiredRoles != null)
             {
                 var user = _userService.GetByMail(userMail).Data;
                 var userClaims = _userService.GetClaims(user).Data;
-                var isHaveRequiredRoles =
+                var doesUserHaveRequiredRoles =
                     requiredRoles.All(role => userClaims.Select(userClaim => userClaim.Name).Contains(role));
-
-                if (!isHaveRequiredRoles) return new ErrorResult(Messages.AuthorizationDenied);
+                if (!doesUserHaveRequiredRoles) return new ErrorResult(Messages.AuthorizationDenied);
             }
 
             return new SuccessResult();

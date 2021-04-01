@@ -33,6 +33,7 @@ namespace Business.Concrete
         public IResult Add(CreditCard creditCard)
         {
             _creditCardDal.Add(creditCard);
+
             return new SuccessResult(Messages.creditCardAdded);
         }
 
@@ -40,6 +41,7 @@ namespace Business.Concrete
         public IResult Delete(CreditCard creditCard)
         {
             _creditCardDal.Delete(creditCard);
+
             return new SuccessResult(Messages.creditCardDeleted);
         }
     }

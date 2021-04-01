@@ -2,48 +2,48 @@
 {
     public static class Messages
     {
-        public static string MaintenanceTime = "Sistem bakımda.";
+        public static string MaintenanceTime = "The system is under maintenance.";
 
-        public static string CarNameInvalid = "Araç ismi geçersiz.";
-        public static string CarsListed = "Araç listelendi";
-        public static string CarAdded = "Araç eklendi.";
-        public static string CarUpdated = "Araç güncellendi.";
-        public static string CarDeleted = "Araç silindi.";
+        public static string CarNameInvalid = "The car name is invalid.";
+        public static string CarsListed = "Cars have listed.";
+        public static string CarAdded = "Car has added.";
+        public static string CarUpdated = "Car has updated.";
+        public static string CarDeleted = "Car has deleted.";
 
-        public static string UserAdded = "Kullanıcı eklendi.";
-        public static string UserUpdated = "Kullanıcı güncellendi.";
-        public static string UserDeleted = "Kullanıcı silindi.";
+        public static string UserAdded = "User has added.";
+        public static string UserUpdated = "User has updated.";
+        public static string UserDeleted = "Car has deleted.";
 
-        public static string CustomerAdded = "Müşteri eklendi.";
-        public static string CustomerUpdated = "Müşteri güncellendi.";
-        public static string CustomerDeleted = "Müşteri silindi.";
+        public static string CustomerAdded = "Customer has added.";
+        public static string CustomerUpdated = "Customer has updated.";
+        public static string CustomerDeleted = "Customer has deleted.";
 
-        public static string RentalAdded = "Kiralama işlemi eklendi.";
-        public static string RentalUpdated = "Kiralama işlemi güncellendi.";
-        public static string RentalDeleted = "Kiralama işlemi silindi.";
-        public static string RentalUndeliveredCar = "Araç henüz teslim edilmedi.";
-        public static string RentalNotAvailable = "Kiralama işlemi seçilen tarihler arasında uygun değil.";
+        public static string RentalAdded = "Rental has added.";
+        public static string RentalUpdated = "Rental has updated.";
+        public static string RentalDeleted = "Rental has deleted.";
+        public static string RentalUndeliveredCar = "The car has not yet been delivered.";
+        public static string RentalNotAvailable = "Rental is not available between the selected dates.";
 
-        public static string BrandAdded = "Marka eklendi.";
-        public static string BrandUpdated = "Marka güncellendi.";
-        public static string BrandDeleted = "Marka silindi.";
+        public static string BrandAdded = "Brand has added.";
+        public static string BrandUpdated = "Brand has updated.";
+        public static string BrandDeleted = "Brand has deleted.";
 
-        public static string ColorAdded = "Renk eklendi.";
-        public static string ColorUpdated = "Renk güncellendi.";
-        public static string ColorDeleted = "Renk silindi.";
+        public static string ColorAdded = "Color has added.";
+        public static string ColorUpdated = "Color has updated.";
+        public static string ColorDeleted = "Color has deleted.";
 
-        public static string CarImageAdded = "Araç fotoğrafı eklendi.";
-        public static string CarImageUpdated = "Araç fotoğrafı güncellendi.";
-        public static string CarImageDeleted = "Araç fotoğrafı silindi.";
-        public static string CarImageCountOfCarError = "İlgili araca ait fotoğraf adedi maksimum sayıdadır.";
+        public static string CarImageAdded = "Car image has added.";
+        public static string CarImageUpdated = "Car image has updated.";
+        public static string CarImageDeleted = "Car image has deleted.";
+        public static string CarImageCountOfCarError = "The images of the car are the maximum number.";
 
-        public static string AuthorizationDenied = "Yetkiniz bulunmamaktadır.";
-        public static string UserRegistered = "Kullanıcı kaydı gerçekleştirildi.";
-        public static string UserNotFound = "Kullanıcı bulunamadı.";
-        public static string SuccessfulLogin = "Giriş başarılı.";
-        public static string PasswordError = "Hatalı parola.";
-        public static string UserAlreadyExists = "Kullanıcı zaten bulunmaktadır.";
-        public static string AccessTokenCreated = "Yetkilendime anahtarı oluşturuldu.";
+        public static string AuthorizationDenied = "You are not authorized.";
+        public static string UserRegistered = "The user has registered.";
+        public static string UserNotFound = "User not found.";
+        public static string SuccessfulLogin = "Login successful.";
+        public static string PasswordError = "Bad password.";
+        public static string UserAlreadyExists = "The user already exists.";
+        public static string AccessTokenCreated = "Access token has created.";
 
         public static string PaymentFailed = "Payment failed.";
         public static string PaymentSuccessful = "Payment Successful.";
@@ -53,9 +53,12 @@
         public static string UserOperationClaimDeleted = "User operation claim has deleted.";
 
         public static string OperationClaimAdded = "Operation claim has added.";
-        public static string OperationClaimUpdated = "Operation claim has added.";
-        public static string OperationClaimDeleted = "Operation claim has added.";
+        public static string OperationClaimUpdated = "Operation claim has updated.";
+        public static string OperationClaimDeleted = "Operation claim has deleted.";
 
+        public static string FindeksAdded = "Findeks point has added.";
+        public static string FindeksUpdated = "Findeks point has updated.";
+        public static string FindeksDeleted = "Findeks point has deleted.";
         public static string FindeksNotEnoughForCar = "Findeks point is not enough for the car.";
         public static string FindeksNotFound = "You have to add your findeks score.";
 

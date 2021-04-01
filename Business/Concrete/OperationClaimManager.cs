@@ -36,6 +36,7 @@ namespace Business.Concrete
         public IResult Add(OperationClaim operationClaim)
         {
             _operationClaimDal.Add(operationClaim);
+
             return new SuccessResult(Messages.OperationClaimAdded);
         }
 
@@ -43,6 +44,7 @@ namespace Business.Concrete
         public IResult Update(OperationClaim operationClaim)
         {
             _operationClaimDal.Update(operationClaim);
+
             return new SuccessResult(Messages.OperationClaimUpdated);
         }
 
@@ -50,6 +52,7 @@ namespace Business.Concrete
         public IResult Delete(OperationClaim operationClaim)
         {
             _operationClaimDal.Delete(operationClaim);
+
             return new SuccessResult(Messages.OperationClaimDeleted);
         }
     }

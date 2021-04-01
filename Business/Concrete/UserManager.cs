@@ -18,19 +18,34 @@ namespace Business.Concrete
         private readonly IFindeksService _findeksService;
         private readonly IUserDal _userDal;
 
-        public UserManager(IUserDal userDal, ICustomerDal customerDal, IFindeksDal findeksDal,
-            IFindeksService findeksService)
+        public UserManager(ICustomerDal customerDal, IFindeksDal findeksDal, IFindeksService findeksService,
+            IUserDal userDal)
         {
-            _userDal = userDal;
             _customerDal = customerDal;
             _findeksDal = findeksDal;
             _findeksService = findeksService;
+            _userDal = userDal;
         }
 
         [SecuredOperation("user.get,moderator,admin")]
         public IDataResult<User> GetById(int id)
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.Id == id));
+        }
+
+        public IDataResult<List<OperationClaim>> GetClaims(User user)
+        {
+            return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
+        }
+
+        public IDataResult<User> GetByMail(string email)
+        {
+            return new SuccessDataResult<User>(_userDal.Get(u => u.Email == email));
+        }
+
+        public IDataResult<UserDetailDto> GetUserDetailByMail(string userMail)
+        {
+            return new SuccessDataResult<UserDetailDto>(_userDal.GetUserDetail(userMail));
         }
 
         [SecuredOperation("user.get,moderator,admin")]
@@ -42,6 +57,7 @@ namespace Business.Concrete
         public IResult Add(User user)
         {
             _userDal.Add(user);
+
             return new SuccessResult(Messages.UserAdded);
         }
 
@@ -49,9 +65,11 @@ namespace Business.Concrete
         public IResult Update(User user)
         {
             _userDal.Update(user);
+
             return new SuccessResult(Messages.UserUpdated);
         }
 
+        [SecuredOperation("user")]
         public IResult UpdateUserDetails(UserDetailForUpdateDto userDetailForUpdate)
         {
             var user = GetById(userDetailForUpdate.Id).Data;
@@ -85,7 +103,7 @@ namespace Business.Concrete
                         CustomerId = userDetailForUpdate.CustomerId,
                         NationalIdentity = userDetailForUpdate.NationalIdentity
                     };
-                    _findeksDal.Add(newFindeks);
+                    _findeksService.Add(newFindeks);
                 }
                 else
                 {
@@ -103,21 +121,6 @@ namespace Business.Concrete
         {
             _userDal.Delete(user);
             return new SuccessResult(Messages.UserDeleted);
-        }
-
-        public IDataResult<List<OperationClaim>> GetClaims(User user)
-        {
-            return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
-        }
-
-        public IDataResult<User> GetByMail(string email)
-        {
-            return new SuccessDataResult<User>(_userDal.Get(u => u.Email == email));
-        }
-
-        public IDataResult<UserDetailDto> GetUserDetailByMail(string userMail)
-        {
-            return new SuccessDataResult<UserDetailDto>(_userDal.GetUserDetail(userMail));
         }
     }
 }

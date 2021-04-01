@@ -24,14 +24,17 @@ namespace Business.Concrete
             _carImageDal = carImageDal;
         }
 
+        [CacheAspect]
         public IDataResult<CarImage> GetById(int id)
         {
             var result = _carImageDal.Get(c => c.Id == id);
+
             IfCarImageOfCarNotExistsAddDefault(ref result);
 
             return new SuccessDataResult<CarImage>(result);
         }
 
+        [SecuredOperation("carimage.getall,moderator,admin")]
         public IDataResult<List<CarImage>> GetAll()
         {
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
@@ -41,6 +44,7 @@ namespace Business.Concrete
         public IDataResult<List<CarImage>> GetImagesByCarId(int carId)
         {
             var result = _carImageDal.GetAll(c => c.CarId == carId);
+
             IfCarImageOfCarNotExistsAddDefault(ref result);
 
             return new SuccessDataResult<List<CarImage>>(result);
@@ -57,6 +61,7 @@ namespace Business.Concrete
             carImage.ImagePath = new FileManagerOnDisk().Add(file, CreateNewPath(file));
             carImage.Date = DateTime.Now;
             _carImageDal.Add(carImage);
+
             return new SuccessResult(Messages.CarImageAdded);
         }
 
@@ -69,6 +74,7 @@ namespace Business.Concrete
             carImage.ImagePath = new FileManagerOnDisk().Update(carImageToUpdate.ImagePath, file, CreateNewPath(file));
             carImage.Date = DateTime.Now;
             _carImageDal.Update(carImage);
+
             return new SuccessResult(Messages.CarImageUpdated);
         }
 
@@ -78,6 +84,7 @@ namespace Business.Concrete
         {
             new FileManagerOnDisk().Delete(carImage.ImagePath);
             _carImageDal.Delete(carImage);
+
             return new SuccessResult(Messages.CarImageDeleted);
         }
 
@@ -99,6 +106,7 @@ namespace Business.Concrete
                     $@"{Environment.CurrentDirectory}\Public\Images\CarImage\default-img.png",
                 Date = DateTime.Now
             };
+
             return defaultCarImage;
         }
 
@@ -115,6 +123,7 @@ namespace Business.Concrete
         {
             var result = _carImageDal.GetAll(c => c.CarId == carId).Count;
             if (result >= 5) return new ErrorResult(Messages.CarImageCountOfCarError);
+
             return new SuccessResult();
         }
     }

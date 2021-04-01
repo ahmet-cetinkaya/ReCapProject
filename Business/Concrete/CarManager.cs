@@ -51,32 +51,6 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id));
         }
 
-        [SecuredOperation("car.add,moderator,admin")]
-        [ValidationAspect(typeof(CarValidator))]
-        [CacheRemoveAspect("ICarService.Get")]
-        public IResult Add(Car car)
-        {
-            _carDal.Add(car);
-            return new SuccessResult(Messages.CarAdded);
-        }
-
-        [SecuredOperation("car.update,moderator,admin")]
-        [ValidationAspect(typeof(CarValidator))]
-        [CacheRemoveAspect("ICarService.Get")]
-        public IResult Update(Car car)
-        {
-            _carDal.Update(car);
-            return new SuccessResult(Messages.CarUpdated);
-        }
-
-        [SecuredOperation("car.delete,moderator,admin")]
-        [CacheRemoveAspect("ICarService.Get")]
-        public IResult Delete(Car car)
-        {
-            _carDal.Delete(car);
-            return new SuccessResult(Messages.CarDeleted);
-        }
-
         [CacheAspect]
         public IDataResult<List<CarDetailDto>> GetCarDetailsByBrandName(string name)
         {
@@ -94,6 +68,35 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c =>
                 c.BrandName == brandName && c.ColorName == colorName));
+        }
+
+        [SecuredOperation("car.add,moderator,admin")]
+        [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICarService.Get")]
+        public IResult Add(Car car)
+        {
+            _carDal.Add(car);
+
+            return new SuccessResult(Messages.CarAdded);
+        }
+
+        [SecuredOperation("car.update,moderator,admin")]
+        [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICarService.Get")]
+        public IResult Update(Car car)
+        {
+            _carDal.Update(car);
+
+            return new SuccessResult(Messages.CarUpdated);
+        }
+
+        [SecuredOperation("car.delete,moderator,admin")]
+        [CacheRemoveAspect("ICarService.Get")]
+        public IResult Delete(Car car)
+        {
+            _carDal.Delete(car);
+
+            return new SuccessResult(Messages.CarDeleted);
         }
     }
 }

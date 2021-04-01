@@ -13,18 +13,21 @@ namespace Business.Concrete
         private readonly IOperationClaimService _operationClaimService;
         private readonly IUserOperationClaimDal _userOperationClaimDal;
 
-        public UserOperationClaimManager(IUserOperationClaimDal userOperationClaimDal,
-            IOperationClaimService operationClaimService)
+        public UserOperationClaimManager(IOperationClaimService operationClaimService,
+            IUserOperationClaimDal userOperationClaimDal
+        )
         {
-            _userOperationClaimDal = userOperationClaimDal;
             _operationClaimService = operationClaimService;
+            _userOperationClaimDal = userOperationClaimDal;
         }
 
+        [SecuredOperation("admin")]
         public IDataResult<UserOperationClaim> GetById(int id)
         {
             return new SuccessDataResult<UserOperationClaim>(_userOperationClaimDal.Get(u => u.Id == id));
         }
 
+        [SecuredOperation("admin")]
         public IDataResult<List<UserOperationClaim>> GetAll()
         {
             return new SuccessDataResult<List<UserOperationClaim>>(_userOperationClaimDal.GetAll());
