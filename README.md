@@ -21,31 +21,9 @@
   </p>
 </p>
 
-<details open="open">
-  <summary><strong>Table of Contents</strong></summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-    <a href="#usage">Usage</a>
-    <ul>
-        <li><a href="#specifications">Specifications</a></li>
-      </ul>
-    </li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
-  </ol>
-</details>
+# About The Project
 
-## About The Project
-
-### Built With
+## Built With
 
 [![C-Sharp](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)](https://docs.microsoft.com/en-us/dotnet/csharp/)
 [![Asp-net](https://img.shields.io/badge/ASP.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)](https://dotnet.microsoft.com/apps/aspnet)
@@ -54,69 +32,71 @@
 [![Autofac](https://img.shields.io/badge/Autofac-004880?style=for-the-badge&logo=nuget&logoColor=white)](https://autofac.org/)
 [![Fluent-Validation](https://img.shields.io/badge/Fluent%20Validation-004880?style=for-the-badge&logo=nuget&logoColor=white)](https://fluentvalidation.net/)
 
-## Usage
-
-### Specifications
+## Specifications
 
 <details>
   <summary>Toggle Content</summary>
 
-#### Cars
+### Cars
 
-### Public Operations
+#### Public Operations
 
-- List all cars
+- Get all cars
   - Searching Cars By Brand, Color
   - Caching
 - Get a single car
   - Caching
 
-### Private Operations
+#### Private Operations
 
-- Ask (Create) a New Car
-  - Authenticated users only (Logged In Users)
+- Add a New Car
+  - Authorized users only
   - Field validation
-- Edit a Question
-  - Authenticated users only (Logged In Users)
+- Edit a Car
+  - Authorized users only
   - Field Validation
-- Delete a Question
-  - Authenticated users only (Logged In Users)
+- Delete a Car
+  - Authorized users only
 
-#### Car Images
+### Car Images
 
 #### Public Operations
 
-- List all car images
 - Get a car image
+  - Caching
+- Get all
   - Searching Car Image By Car
   - Caching
 
 #### Private Operations
 
-- Ask (Create) a New Car Image
-  - Authenticated users only (Logged In Users)
+- Add (Upload) a New Car Image
+  - Authorized users only
+  - Save on Disk
 - Edit a Car Image
-  - Authenticated users only (Logged In Users)
+  - Authorized users only
+  - Edit on Disk
 - Delete a Car Image
-  - Authenticated users only (Logged In Users)
+  - Authorized users only
+  - Delete on Disk
 
-#### Brands
+### Brands
 
 #### Public Operations
 
-- Get All Brands
-- Get Single Brand
+- Get all brands
+- Get a brand
 
 #### Private Operations
 
-- Add (Create) a New Answer To Question
-  - Authenticated users only (Logged In Users)
-- Edit a Answer
-  - Authenticated users only (Logged In Users)
-- Delete a Answer
-  - Authenticated users only (Logged In Users)
+- Add a Brand
+  - Authorized users only
+- Edit a Brand
+  - Authorized users only
+- Delete a Brand
+  - Authorized users only
 
-#### Color
+### Color
 
 #### Public Operations
 
@@ -125,61 +105,73 @@
 
 #### Private Operations
 
-- Add (Create) a Color
-  - Authenticated users only (Logged In Users)
+- Add a Color
+  - Authorized users only
 - Edit a Color
-  - Authenticated users only (Logged In Users)
+  - Authorized users only
 - Delete a Color
-  - Authenticated users only (Logged In Users)
+  - Authorized users only
 
-#### Customer
+### Customer
 
 #### Public Operations
 
-- Get All Customers
-- Get Single Customer
+- Add a Customer
 
 #### Private Operations
 
-- Add (Create) a Customer
-  - Authenticated users only (Logged In Users)
+- Get All Customers
+  - Authorized users only
+- Get Single Customer
+  - Authorized users only
 - Edit a Customer
-  - Authenticated users only (Logged In Users)
+  - Authorized users only
 - Delete a Customer
-  - Authenticated users only (Logged In Users)
+  - Authorized users only
 
-#### Rental
+### Rental
 
 #### Public Operations
 
 - Get All Rentals
+  - Searching Rental By Car
+  - Logged users only
 - Get Single Rental
+  - Logged users only
+- Add a Rental
+  - Logged users only
+- Check Car is Rentable
+- Check Findeks Score Sufficiency
 
 #### Private Operations
 
-- Add (Create) a Rental
-  - Authenticated users only (Logged In Users)
 - Edit a Rental
-  - Authenticated users only (Logged In Users)
+  - Authorized users only
 - Delete a Rental
-  - Authenticated users only (Logged In Users)
+  - Authorized users only
 
-#### Users
+### Users
 
 #### Public Operations
 
-- List all Users
-- Get a User
-- Add (Create) a User
+- Get User Detail By Mail
+- Add a User
+- Update User Details
+  - Logged users only
 
 #### Private Operations
 
+- Get a User
+  - Searching user by mail
+  - Authorized users only
+- Get all Users
+  - Authorized users only
 - Edit a User
-  - Authenticated users only (Logged In Users)
+  - Authorized users only
 - Delete a User
-  - Authenticated users only (Logged In Users)
+  - Authorized users only
 
-## Authentication
+### Authentication
 
 Requests are authenticated using the `Authorization` header and value `Bearer {{token}}`. with a valid JWT.
 
@@ -195,89 +187,108 @@ Requests are authenticated using the `Authorization` header and value `Bearer {{
   - User can login with "email" and "password"
   - Everytime a user login, new Token are sent to to client
 
-## Models
+#### Public Operations
 
-### User
+- Login
+  - Logged users only
+  - Create Access Token
+- Register new user
+  - Create Access Token
+- Check User Exists
+- Check user is authenticated
+  - Logged users only
 
-| Name        | Data Type     | Allow Nulls | Default |
-| :---------- | :------------ | :---------- | :------ |
-| Id          | int           | False       |         |
-| Name        | nvarchar(50)  | False       |         |
-| BrandId     | int           | False       |         |
-| ColorId     | int           | False       |         |
-| DailyPrice  | decimal(18,0) | False       |         |
-| ModelYear   | smallint      | False       |         |
-| Description | nvarchar(50)  | True        |         |
+#### Private Operations
 
-### Car Images
+- Encryption
+- Hashing
+- JWT
 
-| Name      | Data Type     | Allow Nulls | Default |
-| :-------- | :------------ | :---------- | :------ |
-| Id        | int           | False       |         |
-| CarId     | int           | False       |         |
-| ImagePath | nvarchar(MAX) | False       |         |
-| Date      | datetime      | False       |         |
+### Operation Claim
 
-## Brands
+#### Public Operations
 
-| Name | Data Type    | Allow Nulls | Default |
-| :--- | :----------- | :---------- | :------ |
-| Id   | int          | False       |         |
-| Name | nvarchar(25) | False       |         |
+- Get a Operation Claim
+  - Searching Operation Claim by name
+- Get all Operation Claim
 
-## Color
+#### Private Operations
 
-| Name | Data Type    | Allow Nulls | Default |
-| :--- | :----------- | :---------- | :------ |
-| Id   | int          | False       |         |
-| Name | nvarchar(25) | False       |         |
+- Add a Operation Claim
+  - Authorized users only
+- Edit a Operation Claim
+  - Authorized users only
+- Delete a Operation Claim
+  - Authorized users only
 
-## Customer
+### User Operation Claim
 
-| Name        | Data Type | Allow Nulls | Default |
-| :---------- | :-------- | :---------- | :------ |
-| Id          | int       | False       |         |
-| UserId      | int       | False       |         |
-| CompanyName | nchar(50) | True        |         |
+#### Public Operations
 
-## Rental
+- Add 'User' Claim
 
-| Name       | Data Type | Allow Nulls | Default |
-| :--------- | :-------- | :---------- | :------ |
-| Id         | int       | False       |         |
-| CarId      | int       | False       |         |
-| CustomerId | int       | False       |         |
-| RentDate   | datetime  | True        |         |
-| ReturnDate | datetime  | True        |         |
+#### Private Operations
 
-## Users
+- Get a User Operation Claim
+  - Authorized users only
+- Get all User Operation Claim
+  - Authorized users only
+- Add a User Operation Claim
+  - Authorized users only
+- Edit a User Operation Claim
+  - Authorized users only
+- Delete a User Operation Claim
+  - Authorized users only
 
-| Name         | Data Type      | Allow Nulls | Default |
-| :----------- | :------------- | :---------- | :------ |
-| Id           | int            | False       |         |
-| FirstName    | nvarchar(50)   | False       |         |
-| LastName     | nvarchar(50)   | False       |         |
-| Email        | nvarchar(50)   | False       |         |
-| PasswordHash | varbinary(500) | False       |         |
-| PasswordSalt | varbinary(500) | False       |         |
-| Status       | bit            | False       |         |
+### Credit Card (Test)
 
-## OperationClaims
+#### Public Operations
 
-| Name | Data Type    | Allow Nulls | Default |
-| :--- | :----------- | :---------- | :------ |
-| Id   | int          | False       |         |
-| Name | varchar(250) | False       |         |
+- Get a Credit Card
+  - Logged users only
+- Get all Users
+  - Logged users only
+  - Searching Credit Card by Customer
+- Add a Credit Card
+  - Logged users only
+- Delete User Details
+  - Logged users only
 
-## UserOperationClaims
+### Payment (Test)
 
-| Name             | Data Type | Allow Nulls | Default |
-| :--------------- | :-------- | :---------- | :------ |
-| Id               | int       | False       |         |
-| UserId           | int       | False       |         |
-| OperationClaimId | int       | False       |         |
+#### Public Operations
+
+- Payment (Fake)
+
+### Findeks (Test)
+
+#### Public Operations
+
+- Searching Findeks by Customer
+  - Logged users only
+- Add a Findeks
+  - Logged users only
+- Update a Findeks
+  - Logged users only
+- Calculate Findeks Score (Fake)
+
+#### Private Operations
+
+- Get a Findeks
+  - Authorized users only
+- Get all
+  - Authorized users only
+- Update findeks
+  - Authorized users only
+- Delete findeks
+  - Authorized users only
+
+</details><p></p>
 
 ## Layers
+
+<details>
+  <summary>Toggle Content</summary>
 
 ### Business
 
@@ -299,10 +310,120 @@ Entities Layer created for database tables.
 
 Web API Layer that opens the business layer to the internet.
 
-</details>
-<p></p>
+</details><p></p>
 
-## Contributing
+## Models
+
+<details>
+  <summary>Toggle Content</summary>
+
+### Brands
+
+| Name | Data Type    | Allow Nulls | Default |
+| :--- | :----------- | :---------- | :------ |
+| Id   | int          | False       |         |
+| Name | nvarchar(25) | False       |         |
+
+### Car Images
+
+| Name      | Data Type     | Allow Nulls | Default |
+| :-------- | :------------ | :---------- | :------ |
+| Id        | int           | False       |         |
+| CarId     | int           | False       |         |
+| ImagePath | nvarchar(MAX) | False       |         |
+| Date      | datetime      | False       |         |
+
+### Car
+
+| Name            | Data Type     | Allow Nulls | Default |
+| :-------------- | :------------ | :---------- | :------ |
+| Id              | int           | False       |         |
+| Name            | nvarchar(50)  | False       |         |
+| BrandId         | int           | False       |         |
+| ColorId         | int           | False       |         |
+| DailyPrice      | decimal(18,0) | False       |         |
+| ModelYear       | smallint      | False       |         |
+| Description     | nvarchar(50)  | True        |         |
+| MinFindeksScore | smallint      | False       | ((0))   |
+
+### Color
+
+| Name | Data Type    | Allow Nulls | Default |
+| :--- | :----------- | :---------- | :------ |
+| Id   | int          | False       |         |
+| Name | nvarchar(25) | False       |         |
+
+### Credit Card (Test)
+
+| Name        | Data Type     | Allow Nulls | Default |
+| :---------- | :------------ | :---------- | :------ |
+| Id          | int           | False       |         |
+| CustomerId  | int           | False       |         |
+| NameSurname | nvarchar(100) | False       |         |
+| CardNumber  | nvarchar(25)  | False       |         |
+| ExpMonth    | tinyint       | False       |         |
+| ExpYear     | tinyint       | False       |         |
+| Cvc         | nvarchar(3)   | False       |         |
+| CardType    | nvarchar(20)  | False       |         |
+
+### Customer
+
+| Name        | Data Type    | Allow Nulls | Default |
+| :---------- | :----------- | :---------- | :------ |
+| Id          | int          | False       |         |
+| UserId      | int          | False       |         |
+| CompanyName | nvarchar(50) | True        |         |
+
+### Findeks (Test)
+
+| Name             | Data Type    | Allow Nulls | Default |
+| :--------------- | :----------- | :---------- | :------ |
+| Id               | int          | False       |         |
+| CustomerId       | int          | False       |         |
+| NationalIdentity | nvarchar(50) | False       |         |
+| Score            | smallint     | False       | ((0))   |
+
+### OperationClaims
+
+| Name | Data Type    | Allow Nulls | Default |
+| :--- | :----------- | :---------- | :------ |
+| Id   | int          | False       |         |
+| Name | varchar(250) | False       |         |
+
+### Rental
+
+| Name          | Data Type | Allow Nulls | Default |
+| :------------ | :-------- | :---------- | :------ |
+| Id            | int       | False       |         |
+| CarId         | int       | False       |         |
+| CustomerId    | int       | False       |         |
+| RentStartDate | datetime  | False       |         |
+| RentEndDate   | datetime  | False       |         |
+| ReturnDate    | datetime  | True        |         |
+
+### UserOperationClaims
+
+| Name             | Data Type | Allow Nulls | Default |
+| :--------------- | :-------- | :---------- | :------ |
+| Id               | int       | False       |         |
+| UserId           | int       | False       |         |
+| OperationClaimId | int       | False       |         |
+
+### Users
+
+| Name         | Data Type      | Allow Nulls | Default |
+| :----------- | :------------- | :---------- | :------ |
+| Id           | int            | False       |         |
+| FirstName    | nvarchar(50)   | False       |         |
+| LastName     | nvarchar(50)   | False       |         |
+| Email        | nvarchar(50)   | False       |         |
+| PasswordHash | varbinary(500) | False       |         |
+| PasswordSalt | varbinary(500) | False       |         |
+| Status       | bit            | False       |         |
+
+</details><p></p>
+
+# Contributing
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -312,19 +433,19 @@ Contributions are what make the open source community such an amazing place to b
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## License
+# License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-## Contact
+# Contact
 
 Ahmet ÇETİNKAYA - [ahmetcetinkaya.info](https://ahmetcetinkaya.info/)
 
 Project Link: [https://github.com/ahmet-cetinkaya/ReCapProject](https://github.com/ahmet-cetinkaya/ReCapProject)
 
-## Acknowledgements
+# Acknowledgements
 
-- engindemirog
+- [engindemirog](https://www.linkedin.com/in/engindemirog/)
 
 [contributors-shield]: https://img.shields.io/github/contributors/ahmet-cetinkaya/ReCapProject.svg?style=for-the-badge
 [contributors-url]: https://github.com/ahmet-cetinkaya/ReCapProject/graphs/contributors
@@ -336,5 +457,5 @@ Project Link: [https://github.com/ahmet-cetinkaya/ReCapProject](https://github.c
 [issues-url]: https://github.com/ahmet-cetinkaya/ReCapProject/issues
 [license-shield]: https://img.shields.io/github/license/ahmet-cetinkaya/ReCapProject.svg?style=for-the-badge
 [license-url]: https://github.com/ahmet-cetinkaya/ReCapProject/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-shield]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white
 [linkedin-url]: https://linkedin.com/in/ahmet-cetinkaya
